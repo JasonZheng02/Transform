@@ -14,9 +14,9 @@ The file follows the following format:
          scale: create a scale matrix,
                 then multiply the transform matrix by the scale matrix -
                 takes 3 arguments (sx, sy, sz)
-         translate: create a translation matrix,
-                    then multiply the transform matrix by the translation matrix -
-                    takes 3 arguments (tx, ty, tz)
+         move: create a translation matrix,
+               then multiply the transform matrix by the translation matrix -
+               takes 3 arguments (tx, ty, tz)
          rotate: create a rotation matrix,
                  then multiply the transform matrix by the rotation matrix -
                  takes 2 arguments (axis, theta) axis should be x y or z
@@ -33,5 +33,33 @@ The file follows the following format:
 See the file script for an example of the file format
 """
 def parse_file( fname, points, transform, screen, color ):
-    script = open("script","r")
-    
+    file = open("script","r")
+    script = file.readlines()
+    x = 0
+    while x < len(script):
+        if script[x] == "line\n":
+            inputs = script[x+1].split()
+            add_edge(points, int(inputs[0]), int(inputs[1]), int(inputs[2]), int(inputs[3]), int(inputs[4]), int(inputs[5]))
+
+        if script[x] == "display\n":
+            clear_screen(screen)
+            draw_lines(points, screen, color)
+            display( screen )
+
+        if script[x] == "ident\n":
+            ident(transform)
+
+        if script[x] == "scale\n":
+            inputs = script[x+1].split()
+            scale_Matrix = make_scale(int(inputs[0]), int(inputs[1]), int(inputs[2]))
+            matrix_mult(scale_Matrix, transform)
+
+        if script[x] == "apply\n":
+            matrix_mult(transform, points)
+
+        if script[x] == "move\n":
+            inputs = script[x+1].split()
+            translation_Matrix = make_translate(int(inputs[0]), int(inputs[1]), int(inputs[2]))
+            matrix_mult(translation_Matrix, transform)
+            print_matrix(translation_Matrix)
+        x = x + 1
