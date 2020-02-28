@@ -56,10 +56,29 @@ def parse_file( fname, points, transform, screen, color ):
 
         if script[x] == "apply\n":
             matrix_mult(transform, points)
+            for r in range( len( points[0] ) ):
+                for c in range( len(points) ):
+                    points[c][r] = int(points[c][r])
 
         if script[x] == "move\n":
             inputs = script[x+1].split()
             translation_Matrix = make_translate(int(inputs[0]), int(inputs[1]), int(inputs[2]))
             matrix_mult(translation_Matrix, transform)
-            print_matrix(translation_Matrix)
+
+        if script[x] == "rotate\n":
+            inputs = script[x+1].split()
+            if inputs[0] == "x":
+                rot_Matrix = make_rotX(int(inputs[1]))
+            if inputs[0] == "y":
+                rot_Matrix = make_rotY(int(inputs[1]))
+            if inputs[0] == "z":
+                rot_Matrix = make_rotZ(int(inputs[1]))
+            matrix_mult(rot_Matrix, transform)
+
+        if script[x] == "save\n":
+            inputs = script[x+1]
+            clear_screen(screen)
+            draw_lines(points, screen, color)
+            save_ppm(screen, inputs[:-1])
+
         x = x + 1

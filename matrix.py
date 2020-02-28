@@ -26,33 +26,33 @@ def make_scale( x, y, z ):
     return transform
 
 def make_rotX( theta ):
-    r = (theta * 180) / Math.pi
+    r = math.radians(theta)
     transform = new_matrix()
     ident(transform)
-    transform[1][1] = cos(r)
-    transform[2][1] = -sin(r)
-    transform[1][2] = sin(r)
-    transform[2][2] = cos(r)
+    transform[1][1] = math.cos(r)
+    transform[2][1] = -math.sin(r)
+    transform[1][2] = math.sin(r)
+    transform[2][2] = math.cos(r)
     return transform
 
 def make_rotY( theta ):
-    r = (theta * 180) / Math.pi
+    r = math.radians(theta)
     transform = new_matrix()
     ident(transform)
-    transform[0][0] = cos(r)
-    transform[0][2] = -sin(r)
-    transform[2][0] = sin(r)
-    transform[2][2] = cos(r)
+    transform[0][0] = math.cos(r)
+    transform[0][2] = -math.sin(r)
+    transform[2][0] = math.sin(r)
+    transform[2][2] = math.cos(r)
     return transform
 
 def make_rotZ( theta ):
-    r = (theta * 180) / Math.pi
+    r = math.radians(theta)
     transform = new_matrix()
     ident(transform)
-    transform[0][0] = cos(r)
-    transform[1][0] = -sin(r)
-    transform[0][1] = sin(r)
-    transform[1][1] = cos(r)
+    transform[0][0] = math.cos(r)
+    transform[1][0] = -math.sin(r)
+    transform[0][1] = math.sin(r)
+    transform[1][1] = math.cos(r)
     return transform
 
 #print the matrix such that it looks like
