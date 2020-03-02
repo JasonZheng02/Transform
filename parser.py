@@ -81,4 +81,7 @@ def parse_file( fname, points, transform, screen, color ):
             draw_lines(points, screen, color)
             save_ppm(screen, inputs[:-1])
 
+        if script[x] == "quit\n":
+            pass
+            
         x = x + 1
